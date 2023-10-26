@@ -1,0 +1,61 @@
+with open ('life-expectancy.csv') as f:
+    lines = f.readlines()[1:]
+
+    lowest_life_expectancy = float(1000000)
+    highest_life_expectancy = float(-1)
+    lowest_country = ' '
+    highest_country = ' '
+
+    for data in lines:
+        data = data.strip ()
+        data = data.split (',')
+        country = data[0]
+        code = data [1]
+        year = int(data [2])
+        life_expectancy = float(data[3])
+
+
+        if life_expectancy < lowest_life_expectancy:
+            lowest_life_expectancy = life_expectancy
+            lowest_country = country 
+            lowest_year = year
+
+
+        if life_expectancy >highest_life_expectancy:
+            highest_life_expectancy = life_expectancy
+            highest_country = country 
+            highest_year = year 
+
+    print (f'Highest value of life expectancy is: {highest_life_expectancy} from {lowest_country} in {lowest_year}')
+    print (f'lowest value of life expectancy is: {lowest_life_expectancy} from {highest_country} in {highest_year}')
+
+    
+    print ()
+    year_interest = input ('Enter the year of interest \n ')
+    life_expectancies = []
+    countries = []
+    years_found = False  
+
+    for data in lines:
+        data = data.split (',')
+
+        life_expectancy = float(data[3])
+        country = data[0]
+        year = data[2]
+
+        if year == year_interest:
+            life_expectancies.append(life_expectancy)
+            countries.append(country )
+            years_found = True 
+
+    if years_found:
+        average_life_expectancy = sum(life_expectancies) /len(life_expectancies)
+        max_index = life_expectancies.index (max(life_expectancies))
+        min_index = life_expectancies.index (min(life_expectancies))
+
+
+        print ()
+        print (f'For the year {year_interest}: \n The average life expectancy across all countries was {average_life_expectancy:.2f} ')
+        print (f'The max life expectancy was in {countries [max_index]} with {max(life_expectancies)}')
+        print (f' The min life expectancy was in {countries [min_index]} with {min (life_expectancies)}')
+
